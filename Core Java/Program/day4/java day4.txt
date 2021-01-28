@@ -1,0 +1,530 @@
+package com.cybage;
+
+ 
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+ 
+
+public class WritingExample {
+    public static void main(String[] args) throws IOException  {
+        //all variables in beginning....
+        FileOutputStream output = null;
+        String data = "i want to write this data in file...";
+        
+        //programming logic goes from here...
+        try {
+            output = new FileOutputStream("myfile.txt", true);
+            output.write(data.getBytes());            
+        }catch(FileNotFoundException fe) {
+            System.out.println(fe.getMessage());
+        }catch(IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }finally {
+            output.close();            
+        }    
+    }
+}
+
+-----------------------------------------------------------------------
+package com.cybage;
+
+ 
+
+import java.io.FileInputStream;
+
+ 
+
+public class ReadingFile {
+    public static void main(String[] args) throws Exception{
+        //declaration
+        FileInputStream input = null;
+        int data;
+        
+        //programming logic
+        input = new FileInputStream("myfile.txt");
+        
+        while( (data = input.read()) != -1) {
+            System.out.print((char)data);    
+        }
+        input.close();
+        
+    }
+}
+
+-------------------------------------------------------------------------
+package com.cybage.charstream;
+
+ 
+
+import java.io.FileReader;
+
+ 
+
+public class ReadingExample {
+    public static void main(String[] args) throws Exception{
+        FileReader reader = null;
+        int data;
+        
+        //programming logic
+        reader = new FileReader("charstream.txt");
+        
+        while( (data = reader.read()) != -1 ) {
+            System.out.print((char)data);    
+        }
+        
+        reader.close();
+    }
+}
+
+--------------------------------------------------------------------------
+package com.cybage.charstream;
+
+ 
+
+import java.io.FileWriter;
+
+ 
+
+public class WritingExample {
+    public static void main(String[] args) throws Exception {
+        FileWriter writer = null;
+        String data = "i want to write this data using filewriter";
+        
+        //programming
+        writer = new FileWriter("charstream.txt");
+        writer.write(data);
+        
+        writer.close();
+    }
+}
+
+
+-------------------------------------------------------------------------
+CASE STUDY - EMPLOYEE
+-------------------------------------------------------------------------
+
+    
+package com.cybage;
+
+
+import java.io.IOException;
+
+
+import com.cybage.exception.EmployeeException;
+import com.cybage.service.EmployeeService;
+import com.cybage.service.EmployeeServieImpl;
+
+
+public class UI {​​​​​​​
+    public static void main(String[] args) {​​​​​​​
+        System.out.println("employee demo...");
+        
+        EmployeeService empService = new EmployeeServieImpl();
+        
+        try {​​​​​​​
+            //add one regular employee
+            empService.add("reg101", "reg address", 123, "REG");            
+        }​​​​​​​catch(EmployeeException | IOException ee) {​​​​​​​
+            System.err.println(ee.getLocalizedMessage());
+        }​​​​​​​
+        
+        try {​​​​​​​
+            //add one retired employee
+            empService.add("ret102", "ret address", 789, "RET");            
+        }​​​​​​​catch(EmployeeException | IOException ee) {​​​​​​​
+            System.err.println(ee.getLocalizedMessage());
+        }​​​​​​​
+        
+        try {​​​​​​​
+            empService.displayAll();    
+        }​​​​​​​catch (EmployeeException | IOException ee) {​​​​​​​
+            System.err.println(ee.getLocalizedMessage());
+        }​​​​​​​
+    }​​​​​​​
+}​​​​​​​
+
+
+
+
+
+    
+package com.cybage.dao;
+
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+
+import com.cybage.model.Employee;
+
+
+public interface EmployeeDao {​​​​​​​
+    public void add(Employee emp) throws IOException;
+    public void delete();
+    public void update();
+    public void display() throws IOException;
+}​​​​​​​
+ 
+
+
+
+
+
+
+    
+package com.cybage.dao;
+
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+import com.cybage.model.Employee;
+
+
+public class EmployeeDaoImpl implements EmployeeDao {​​​​​​​
+    
+    FileWriter writer = null;
+    FileReader reader = null;
+    
+    @Override
+    public void add(Employee emp) throws IOException{​​​​​​​    
+        writer = new FileWriter("db.txt", true);
+        writer.write(emp.toString());
+        writer.close();
+    }​​​​​​​
+
+
+    @Override
+    public void delete() {​​​​​​​
+        // TODO Auto-generated method stub
+        
+    }​​​​​​​
+
+
+    @Override
+    public void update() {​​​​​​​
+        // TODO Auto-generated method stub
+        
+    }​​​​​​​
+
+
+    @Override
+    public void display() throws IOException {​​​​​​​
+        reader = new FileReader("db.txt");
+        int data;
+        while((data = reader.read()) != -1) {​​​​​​​
+            System.out.print((char)data);
+        }​​​​​​​
+        reader.close();
+    }​​​​​​​
+
+
+}​​​​​​​
+ 
+
+
+
+
+
+
+
+
+
+    
+package com.cybage.exception;
+
+
+public class EmployeeException extends Exception{​​​​​​​
+    public EmployeeException(String msg) {​​​​​​​
+        super(msg);
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+    
+package com.cybage.model;
+
+
+public abstract class Employee{​​​​​​​        //class which is incomplete
+    //properties, instance variables
+    private int id;
+    private String name;
+    private String address;
+    
+    
+    //constructor, constructor overloading
+    public Employee(){​​​​​​​
+        System.out.println("empty object created");
+        this.id = 0;
+        this.name = null;
+        this.address = null;
+    }​​​​​​​
+    public Employee(int id, String name, String address){​​​​​​​    //local variable
+        System.out.println("object with values created");
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }​​​​​​​
+    public int getId() {​​​​​​​
+        return this.id;
+    }​​​​​​​
+    public void setName(String name) {​​​​​​​
+        this.name = name;
+    }​​​​​​​
+    public String getName() {​​​​​​​
+        return this.name;
+    }​​​​​​​
+    public void setAddress(String address) {​​​​​​​
+        this.address = address;
+    }​​​​​​​
+    public String getAddress() {​​​​​​​
+        return this.address;
+    }​​​​​​​
+    
+    @Override
+    public String toString() {​​​​​​​
+return "Employee [id: "+ this.id+ ", name: "+ this.name + ",address: "+this.address+ "]";
+    }​​​​​​​
+    
+    public abstract int getCompensation();    //no definition
+}​​​​​​​
+ 
+
+
+
+
+    
+package com.cybage.model;
+
+
+public class RegularEmployee extends Employee{​​​​​​​
+    //id, name, address will be inherited
+    private int salary;
+
+
+    public RegularEmployee() {​​​​​​​
+        super();
+    }​​​​​​​
+
+
+    public RegularEmployee(int id, String name, String address, int salary) {​​​​​​​
+        super(id, name, address);
+        this.salary = salary;
+    }​​​​​​​
+
+
+    public int getSalary() {​​​​​​​
+        return salary;
+    }​​​​​​​
+
+
+    public void setSalary(int salary) {​​​​​​​
+        this.salary = salary;
+    }​​​​​​​
+
+
+    @Override
+    public String toString() {​​​​​​​
+        return "RegularEmployee [salary=" + salary + ", getId()=" + getId() + ", getName()=" + getName()
+                + ", getAddress()=" + getAddress() + "]";
+    }​​​​​​​
+
+
+    @Override
+    public int getCompensation() {​​​​​​​
+        return this.salary;
+    }​​​​​​​
+    
+}​​​​​​​
+
+
+
+
+
+
+
+
+
+
+    
+package com.cybage.model;
+
+
+public class RetiredEmployee extends Employee{​​​​​​​
+    //id, name, address inherited
+    private int pension;
+
+
+    public RetiredEmployee() {​​​​​​​
+        super();
+    }​​​​​​​
+
+
+    public RetiredEmployee(int id, String name, String address, int pension) {​​​​​​​
+        super(id, name, address);
+        this.pension = pension;        
+    }​​​​​​​
+
+
+    public int getPension() {​​​​​​​
+        return pension;
+    }​​​​​​​
+
+
+    public void setPension(int pension) {​​​​​​​
+        this.pension = pension;
+    }​​​​​​​
+
+
+    @Override
+    public String toString() {​​​​​​​
+        return "RetiredEmployee [pension=" + pension + ", getId()=" + getId() + ", getName()=" + getName()
+                + ", getAddress()=" + getAddress() + "]";
+    }​​​​​​​
+
+
+    @Override
+    public int getCompensation() {​​​​​​​
+        return this.pension;
+    }​​​​​​​    
+}​​​​​​​
+
+
+
+
+
+
+
+
+
+
+    
+package com.cybage.service;
+
+
+import java.io.IOException;
+
+
+import com.cybage.exception.EmployeeException;
+import com.cybage.model.Employee;
+
+
+public interface EmployeeService {​​​​​​​
+    public abstract void add(String name, String address, int comp, String type) throws EmployeeException, IOException;
+    public abstract void displayAll() throws EmployeeException, IOException;
+    public abstract void displayComp();
+    public abstract void delete(int id);
+    public abstract void update(int id, Employee emp);
+    //update
+    //delete
+    //CRUD --> create , read, update, delete
+}​​​​​​​
+ 
+
+
+
+
+
+    
+package com.cybage.service;
+
+
+import java.io.IOException;
+
+
+import com.cybage.dao.EmployeeDao;
+import com.cybage.dao.EmployeeDaoImpl;
+import com.cybage.exception.EmployeeException;
+import com.cybage.model.Employee;
+import com.cybage.model.RegularEmployee;
+import com.cybage.model.RetiredEmployee;
+
+
+public class EmployeeServieImpl implements EmployeeService{​​​​​​​
+
+
+    private Employee emp[] = new Employee[10];
+    private static int count = 0;
+    
+    EmployeeDao empDao = new EmployeeDaoImpl();
+    
+    private int generateId() {​​​​​​​
+        return (int) (Math.round(Math.random()*100000));
+    }​​​​​​​
+    
+
+
+    @Override
+    public void add(String name, String address, int comp, String type) throws EmployeeException, IOException{​​​​​​​
+
+
+        if(name == null) {​​​​​​​
+            throw new EmployeeException("Cannot add employee as name is blank");
+        }​​​​​​​
+        if(address == null){​​​​​​​
+            throw new EmployeeException("Cannot add employee as address is blank");
+        }​​​​​​​    
+        if(comp <= 0) {​​​​​​​
+            throw new EmployeeException("Cannot add employee as comp is less than 0");
+        }​​​​​​​
+        
+        if(type.equals("REG")) {​​​​​​​
+            empDao.add(new RegularEmployee(generateId() , name, address, comp));
+        }​​​​​​​else if(type.equals("RET")){​​​​​​​
+            empDao.add(new RetiredEmployee( generateId(),  name, address, comp));
+        }​​​​​​​else {​​​​​​​
+            System.out.println("not able to add employee as type is invalid");
+        }​​​​​​​
+    }​​​​​​​
+
+
+    @Override
+    public void displayAll() throws EmployeeException, IOException{​​​​​​​
+        empDao.display();
+    }​​​​​​​
+
+
+    @Override
+    public void displayComp() {​​​​​​​
+        
+        for(Employee e : emp) {​​​​​​​
+            if(e == null) break;
+            System.out.println("Id: " + e.getId() +" comp: " + e.getCompensation());
+        }​​​​​​​
+    }​​​​​​​
+
+
+    @Override
+    public void delete(int id) {​​​​​​​
+
+
+    }​​​​​​​
+
+
+    @Override
+    public void update(int id, Employee emp) {​​​​​​​
+
+
+    }​​​​​​​
+}​​​​​​​
+
+
+
+
+
+
+
+
+
+
+
+
+
+

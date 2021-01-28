@@ -1,0 +1,24 @@
+package java_eight;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+public class Test_Employee {
+	public static void main(String[] args) {
+		List<Employee> list = new ArrayList<>();
+		
+		list.add(new Employee(101,"k",22,1000));
+		list.add(new Employee(102,"r",22,1000));
+		list.add(new Employee(103,"n",21,1000));
+		list.add(new Employee(104,"v",22,1000));
+		list.add(new Employee(105,"a",20,1000));
+		list
+		.stream()
+		.forEach((e)-> System.out.println(e));
+			
+			
+			
+		});
+	}
+}

@@ -1,0 +1,143 @@
+[5:14 PM] Dadaram Manohar Jadhav
+    dbUrl = jdbc:mysql://localhost:3306/cyb
+dbUser = root
+dbPassword = admin123
+​[5:24 PM] 
+      Ankit Sonje(Guest) left the conversation.
+    ​[5:24 PM] 
+      Ankit Sonje(Guest) joined the meeting.
+    ​[5:29 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+public class Test {​​​​​​​
+    public static void main(String[] args) throws Exception{​​​​​​​
+        System.out.println("jdbc example...");
+        JDBCExample je = new JDBCExample();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        je.getRecord();
+        
+        //je.addRecord();
+    }​​​​​​​
+}​​​​​​​
+
+
+
+​[5:29 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+
+public class JDBCExample {​​​​​​​
+
+
+    public void getRecord() throws Exception{​​​​​​​
+        
+        Connection con = DbUtil.getCon();
+        //3. now we can talk to database through con connection
+        Statement statement = con.createStatement();
+        ResultSet result = statement.executeQuery("select * from customer");
+
+
+        while(result.next()) {​​​​​​​
+            System.out.println(result.getInt(1) + "   "+ result.getString(2));
+        }​​​​​​​
+
+
+        result.close();
+        statement.close();
+        con.close();
+    }​​​​​​​
+
+
+    public void addRecord() throws Exception{​​​​​​​
+        
+        Connection con = DbUtil.getCon();
+        //3. now we can talk to database through con connection
+        PreparedStatement ps = con.prepareStatement("insert into customer values (? , ?)");
+        ps.setInt(1, 12347);
+        ps.setString(2, "dmjadhav2");
+        
+        if(!ps.execute()) {​​​​​​​
+            System.out.println("record added successfully...");
+        }​​​​​​​else {​​​​​​​
+            System.out.println("could not add record in database...");
+        }​​​​​​​
+        ps.close();
+        con.close();        
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+
+
+
+
+
+​[5:29 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Properties;
+
+
+public class DbUtil {​​​​​​​
+    
+    private static String className = "com.mysql.jdbc.Driver";
+    private static String dbUrl;
+    private static String dbUser;
+    private static String dbPassword;
+    
+    static {​​​​​​​        //if want to execute something during class loading
+        try {​​​​​​​
+            FileReader reader = new FileReader("d:\\db.properties");
+            Properties props = new Properties();
+            
+            props.load(reader);
+            dbUrl = props.getProperty("dbUrl");
+            dbUser = props.getProperty("dbUser");
+            dbPassword = props.getProperty("dbPassword");
+            
+            
+        }​​​​​​​ catch (Exception e) {​​​​​​​
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }​​​​​​​
+    }​​​​​​​
+    
+    public static Connection getCon() throws Exception{​​​​​​​
+        Class.forName(className);    
+        Connection con 
+        = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        
+        return con; 
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+

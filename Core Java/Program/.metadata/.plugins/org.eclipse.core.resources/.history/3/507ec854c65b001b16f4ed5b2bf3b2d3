@@ -1,0 +1,6 @@
+package java_eight;
+
+public class Test {
+	Calc c = new Calc();
+	System.out.println();
+}

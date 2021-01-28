@@ -1,0 +1,411 @@
+package com.cybage;
+
+ 
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+ 
+
+public class ListExample {
+    public static void main(String[] args) {
+        List<String> skills = new ArrayList<>();
+        
+        skills.add("java");
+        skills.add("angular");
+        skills.add("spring");
+        
+        //printing
+        System.out.println("-----1. using sysout----");
+        System.out.println(skills);
+        
+        System.out.println("-----2. using for each----");
+        for(String s : skills) {
+            System.out.println(s);
+        }
+        System.out.println("-----3. using iterator----");
+        Iterator<String> skillIterator = skills.iterator();
+        while(skillIterator.hasNext()) {
+            System.out.println(skillIterator.next());
+        }
+        
+        
+        
+        
+        
+    }
+}
+
+[12:18 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+
+public class ListExample {​​​​​​​
+    public static void main(String[] args) {​​​​​​​
+        List<String> skills = new ArrayList<>();
+
+
+        skills.add("java");
+        skills.add("angular");
+        skills.add("spring");
+        skills.add("spring");                
+        skills.add(0, "react");
+
+
+        //printing
+        System.out.println("-----using sysout----");
+        System.out.println(skills);
+
+
+        //removing element
+        skills.remove(1);
+        System.out.println("-----after removal----");
+        System.out.println(skills);
+
+
+        //removing element using object name
+        skills.remove("spring");
+        System.out.println("-----after removal----");
+        System.out.println(skills);
+
+
+        //searching 
+        System.out.println("search using index: "+ skills.get(2));
+
+
+        //searching using object
+        System.out.println("search using object: " + skills.contains("angular"));
+
+
+        //searching using object and get index
+        System.out.println("search using object and get index: " + skills.lastIndexOf("angular"));
+        
+        //sorting - ascending
+        Collections.sort(skills);
+        System.out.println("after sorting... "+ skills);
+
+
+        //sorting - descending 
+        Collections.sort(skills, Collections.reverseOrder());
+        System.out.println("after sorting... "+ skills);
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+​[12:22 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+public class User {​​​​​​​
+    private int id;
+    private String name;
+    public User() {​​​​​​​
+        super();
+    }​​​​​​​
+    public User(int id, String name) {​​​​​​​
+        super();
+        this.id = id;
+        this.name = name;
+    }​​​​​​​
+    public int getId() {​​​​​​​
+        return id;
+    }​​​​​​​
+    public void setId(int id) {​​​​​​​
+        this.id = id;
+    }​​​​​​​
+    public String getName() {​​​​​​​
+        return name;
+    }​​​​​​​
+    public void setName(String name) {​​​​​​​
+        this.name = name;
+    }​​​​​​​
+    @Override
+    public String toString() {​​​​​​​
+        return "\nUser [id=" + id + ", name=" + name + "]";
+    }​​​​​​​        
+}​​​​​​​
+ 
+
+
+
+​[12:52 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+public class User extends Object implements Comparable<User>{​​​​​​​
+    private int id;
+    private String name;
+    public User() {​​​​​​​
+        super();
+    }​​​​​​​
+    public User(int id, String name) {​​​​​​​
+        super();
+        this.id = id;
+        this.name = name;
+    }​​​​​​​
+    public int getId() {​​​​​​​
+        return id;
+    }​​​​​​​
+    public void setId(int id) {​​​​​​​
+        this.id = id;
+    }​​​​​​​
+    public String getName() {​​​​​​​
+        return name;
+    }​​​​​​​
+    public void setName(String name) {​​​​​​​
+        this.name = name;
+    }​​​​​​​
+    @Override
+    public String toString() {​​​​​​​
+        return "\nUser [id=" + id + ", name=" + name + "]";
+    }​​​​​​​
+    
+    @Override
+    public int hashCode() {​​​​​​​
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }​​​​​​​
+    
+    @Override
+    public boolean equals(Object obj) {​​​​​​​
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id != other.id)
+            return false;
+        if (name == null) {​​​​​​​
+            if (other.name != null)
+                return false;
+        }​​​​​​​ else if (!name.equals(other.name))
+            return false;
+        return true;
+    }​​​​​​​
+//    @Override
+//    public int compareTo(User o) {​​​​​​​    // positive, negative , 0
+//        return this.getId() - o.getId();
+//    }​​​​​​​
+//    @Override
+//    public int compareTo(User o) {​​​​​​​    // positive, negative , 0
+//        return o.getId() - this.getId();
+//    }​​​​​​​
+//    @Override
+//    public int compareTo(User o) {​​​​​​​    // positive, negative , 0
+//        return this.getName().compareTo(o.getName());
+//    }​​​​​​​
+    @Override
+    public int compareTo(User o) {​​​​​​​    // positive, negative , 0
+        return o.getName().compareTo(this.getName());
+    }​​​​​​​
+    
+}​​​​​​​
+ 
+
+
+
+​[12:58 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class UserExample {​​​​​​​
+    public static void main(String[] args) {​​​​​​​
+        System.out.println("user example");
+        List<User> users = new ArrayList<>();
+        
+        users.add(new User(101, "zdm101"));
+        users.add(new User(102, "xdm102"));
+        users.add(new User(105, "ydm105"));
+        users.add(new User(103, "adm103"));
+        users.add(new User(104, "bdm104"));
+        
+        
+        System.out.println(users);
+        
+        //sorting using id(asc)
+        Collections.sort(users, new IdComparator());
+        System.out.println("after sorting" + users);
+        
+        //now i want to sorting using id but in desc
+        Collections.sort(users, new IdComparatorDesc());
+        System.out.println("after sorting" + users);
+        
+        //now want to sort using name(Asc)
+        Collections.sort(users, new NameComparator());
+        System.out.println("after sorting" + users);
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+
+​[12:58 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+public class User extends Object {​​​​​​​
+    private int id;
+    private String name;
+    public User() {​​​​​​​
+        super();
+    }​​​​​​​
+    public User(int id, String name) {​​​​​​​
+        super();
+        this.id = id;
+        this.name = name;
+    }​​​​​​​
+    public int getId() {​​​​​​​
+        return id;
+    }​​​​​​​
+    public void setId(int id) {​​​​​​​
+        this.id = id;
+    }​​​​​​​
+    public String getName() {​​​​​​​
+        return name;
+    }​​​​​​​
+    public void setName(String name) {​​​​​​​
+        this.name = name;
+    }​​​​​​​
+    @Override
+    public String toString() {​​​​​​​
+        return "\nUser [id=" + id + ", name=" + name + "]";
+    }​​​​​​​
+    
+    @Override
+    public int hashCode() {​​​​​​​
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }​​​​​​​
+    
+    @Override
+    public boolean equals(Object obj) {​​​​​​​
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id != other.id)
+            return false;
+        if (name == null) {​​​​​​​
+            if (other.name != null)
+                return false;
+        }​​​​​​​ else if (!name.equals(other.name))
+            return false;
+        return true;
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+​[12:58 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.util.Comparator;
+
+
+public class IdComparator implements Comparator<User>{​​​​​​​
+
+
+    @Override
+    public int compare(User o1, User o2) {​​​​​​​
+        return o1.getId() - o2.getId();
+    }​​​​​​​
+    
+}​​​​​​​
+ 
+
+
+
+
+
+​[12:58 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.util.Comparator;
+
+
+public class IdComparatorDesc implements Comparator<User>{​​​​​​​
+
+
+    @Override
+    public int compare(User o1, User o2) {​​​​​​​
+        return o2.getId() - o1.getId();
+    }​​​​​​​
+    
+}​​​​​​​
+ 
+
+
+
+
+
+​[12:58 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.util.Comparator;
+
+
+public class NameComparator implements Comparator<User>{​​​​​​​
+
+
+    @Override
+    public int compare(User o1, User o2) {​​​​​​​
+        return o1.getName().compareTo(o2.getName());
+    }​​​​​​​
+    
+
+
+}​​​​​​​
+ 
+
+
+
+
+
+

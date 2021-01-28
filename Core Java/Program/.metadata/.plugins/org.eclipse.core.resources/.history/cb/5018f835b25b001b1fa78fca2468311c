@@ -1,0 +1,7 @@
+package com.cybage.ipc;
+
+public class Test {
+	public static void main(String[] args) extends Thread{
+	Account acc = new Account();
+}
+}

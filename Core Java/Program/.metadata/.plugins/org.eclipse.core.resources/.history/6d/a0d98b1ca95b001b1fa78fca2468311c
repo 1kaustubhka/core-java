@@ -1,0 +1,14 @@
+package MultiThreading;
+
+public class User extends Thread{
+	Account a1;
+	public User(Account acc)
+	{
+		this.a1=acc;
+	}
+	@Override
+	public void run() {
+		a1.withdraw(5000);
+		super.run();
+	}
+}

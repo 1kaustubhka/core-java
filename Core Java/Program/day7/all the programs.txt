@@ -1,0 +1,214 @@
+[12:27 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+@MyAnnotation
+public class AnnotationExample {​​​​​​​
+    
+    @MyAnnotation
+    private int prop;
+    
+    @MyAnnotation
+    public AnnotationExample() {​​​​​​​
+        System.out.println("this is constructor");
+    }​​​​​​​
+    
+    @MyAnnotation
+    public static void main(@MyAnnotation String[] args) {​​​​​​​
+        System.out.println("annotation example");Folklore@8
+
+    public Employee(int id, String name) {​​​​​​​
+        super();
+        this.id = id;
+        this.name = name;
+    }​​​​​​​
+    @Override    //we are modifying toString from Object class
+    public String toString() {​​​​​​​
+        return "Employee [id=" + id + ", name=" + name + "]";
+    }​​​​​​​
+    public void display(int a) {​​​​​​​
+        int temp = 10;
+        System.out.println(a + temp);
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+
+​[12:27 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+
+@Target({​​​​​​​ElementType.TYPE, ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.METHOD,
+    ElementType.PARAMETER, ElementType.LOCAL_VARIABLE}​​​​​​​)
+//@Retention(RetentionPolicy.SOURCE)
+//@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)    //how to access annotations --> reflections
+public @interface MyAnnotation {​​​​​​​
+    String address() default "pune";
+    int salary() default 123;
+}​​​​​​​
+ 
+
+
+
+
+​[12:27 PM] Dadaram Manohar Jadhav
+    
+package com.cybage;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class WrapperExample {​​​​​​​
+    public static void main(String[] args) {​​​​​​​
+        System.out.println("wrapper classes example");
+        int salary = 123;
+        
+        Integer iObj = new Integer(100);    //created new object
+        Integer iObj1 = 12345;        //values
+        
+        System.out.println(iObj.MAX_VALUE);
+        System.out.println(iObj.MIN_VALUE);
+        
+        Integer sum = iObj + iObj1;        //auto-unboxing , auto-boxing
+        Integer sum1 = iObj.intValue() + iObj1.intValue();        //auto-boxing
+        
+        Integer sum2 = new Integer(iObj.intValue() + iObj1.intValue()); //no auto-unboxing, no auto-boxing
+        
+        Double d1 = new Double(123);
+    
+        System.out.println(sum);
+        
+    }​​​​​​​
+}​​​​​​​
+
+--------------------------------------------------------------------------
+MULTI THREADING
+-------------------------------------------------------------------------
+[3:30 PM] Dadaram Manohar Jadhav
+    
+package com.cybage.threading;
+
+
+public class XYZProject {​​​​​​​
+    //main thread will be started....
+    public static void main(String[] args) throws InterruptedException {​​​​​​​
+        System.out.println("welcome to XYZ project...(manager)");
+        System.out.println("information about thread...");
+        System.out.println("name: "+ Thread.currentThread().getName());
+        System.out.println("id: "+ Thread.currentThread().getId());
+        
+        Developer d1 = new Developer();        
+        
+        Tester t1 = new Tester();        
+        
+        Deployment dp = new Deployment();
+        
+        d1.setName("developer");
+        t1.setName("tester");
+        dp.setName("deployment");
+        
+        d1.setPriority(1);
+        t1.setPriority(2);
+        dp.setPriority(3);
+        
+        d1.setDaemon(true);        //d1 will be background thread(daemon)
+        
+        dp.start();
+        d1.start();            //it will give a call to run method
+        t1.start();
+        System.out.println(d1.getPriority());
+        System.out.println(t1.getPriority());
+        System.out.println(dp.getPriority());
+        
+        
+        //we need to wait till the execution of all the threads...
+        d1.join();
+        t1.join();
+        dp.join();
+        
+        System.out.println("4. we have finish project...");    
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+​[3:30 PM] Dadaram Manohar Jadhav
+    
+package com.cybage.threading;
+
+
+public class Developer extends Thread{​​​​​​​
+    @Override
+    public void run() {​​​​​​​
+        try {​​​​​​​
+            sleep(500 *1000);    
+        }​​​​​​​catch(InterruptedException ie) {​​​​​​​
+            System.out.println(ie.getMessage());
+        }​​​​​​​
+        
+        System.out.println("1. i am developing code..." + getName());
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+​[3:30 PM] Dadaram Manohar Jadhav
+    
+package com.cybage.threading;
+
+
+public class Tester extends Thread{​​​​​​​
+    @Override
+    public void run() {​​​​​​​
+        try {​​​​​​​
+            sleep(2 *1000);    
+        }​​​​​​​catch(InterruptedException ie) {​​​​​​​
+            System.out.println(ie.getMessage());
+        }​​​​​​​
+        System.out.println("2. i am testing code..." + getName());
+    }​​​​​​​
+}​​​​​​​
+
+
+
+​[3:30 PM] Dadaram Manohar Jadhav
+    
+package com.cybage.threading;
+
+
+public class Deployment extends Thread{​​​​​​​
+    @Override
+    public void run() {​​​​​​​
+        try {​​​​​​​
+            sleep(3 *1000);    
+        }​​​​​​​catch(InterruptedException ie) {​​​​​​​
+            System.out.println(ie.getMessage());
+        }​​​​​​​
+        System.out.println("3. i am deploying and maintain project..." + getName());
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+
+ 
+
+
+
+

@@ -1,0 +1,16 @@
+package com.cybage;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class JDBCExample {
+	public void addRecord() throws Exception {
+		//1.Load Database
+		Class.forName("com.mysql.jdbc.driver");
+		
+		//2. Connect to actual database using MySQL driver
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cyb","root","cyabge123");
+		
+		//3. Talkv to db usig conn object
+	}
+}

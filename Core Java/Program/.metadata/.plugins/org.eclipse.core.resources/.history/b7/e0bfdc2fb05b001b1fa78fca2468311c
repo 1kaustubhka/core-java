@@ -1,0 +1,14 @@
+package com.cybage.ipc;
+
+public class Account {
+	private int bal = 25000;
+	
+	public synchronized void withdraw(int amount)
+	{
+		
+	}
+	public synchronized void deposit(int amount)
+	{
+		
+	}
+}

@@ -7,7 +7,7 @@ import com.cybage.service.EmployeeService;
 import com.cybage.service.EmployeeServieImpl;
 
 public class UI {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		@SuppressWarnings("unused")
 		int a = 10;
@@ -26,14 +26,36 @@ public class UI {
 		try {
 			//add one retired employee
 			empService.add("ret102", "ret address", 789, "RET");			
-		}catch(EmployeeException | IOException ee) {
+		}catch(EmployeeException ee) {
 			System.err.println(ee.getLocalizedMessage());
 		}
 		
 		try {
 			empService.displayAll();	
-		}catch (EmployeeException | IOException ee) {
+		}catch (EmployeeException ee) {
 			System.err.println(ee.getLocalizedMessage());
 		}
+		
+		try {
+			empService.update(20975,"Kaustubh","PUNE",150000,"REG");	
+		}catch (EmployeeException ee) {
+			System.err.println(ee.getLocalizedMessage());
+		}
+		try {
+			empService.displayAll();	
+		}catch (EmployeeException ee) {
+			System.err.println(ee.getLocalizedMessage());
+		}
+		try {
+			empService.delete(20975);	
+		}catch (EmployeeException ee) {
+			System.err.println(ee.getLocalizedMessage());
+		}
+		try {
+			empService.displayAll();	
+		}catch (EmployeeException ee) {
+			System.err.println(ee.getLocalizedMessage());
+		}
+		
 	}
 }

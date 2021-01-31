@@ -1,0 +1,126 @@
+[12:56 PM] Dadaram Manohar Jadhav
+    
+package com.cyb;
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+public class App 
+{​​​​​​​
+    public static final Logger log = LogManager.getLogger(App.class.getName());
+    public static void main( String[] args )
+    {​​​​​​​
+
+
+        while(true) {​​​​​​​
+            //event message/level
+            log.debug("debug message");
+            log.info("this is just info message...");
+            log.warn("this is warning message");
+            log.error("error message");
+            log.fatal("fatel error message");    
+        }​​​​​​​
+        
+    }​​​​​​​
+}​​​​​​​
+ 
+
+
+
+
+
+​[12:56 PM] Dadaram Manohar Jadhav
+    <?xml version="1.0" encoding="utf-8"?>
+<Configuration status="info">
+    <Properties>
+        <Property name="layout">%d [%t] %-5level %logger{​​​​​​​36}​​​​​​​ - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="${​​​​​​​layout}​​​​​​​" />
+        </Console>    
+<!--         <File name="MyFile" fileName="mylog.log" append="true">
+            <PatternLayout pattern="${​​​​​​​layout}​​​​​​​"/>
+        </File>  -->
+        <RollingFile name="MyFile" fileName="app.log"
+                     filePattern="app.%d{​​​​​​​yyyy-MM-dd}​​​​​​​-%i.log">
+            <PatternLayout pattern="${​​​​​​​layout}​​​​​​​" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="1 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+            
+    </Appenders>
+    <Loggers>
+    <!-- level ==> configuration level -->
+        <Logger name="com.cyb" level="info" additivity="false" >
+            <AppenderRef ref="MyFile" />
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+        </Root>   
+    </Loggers>
+</Configuration>
+
+​[12:56 PM] Dadaram Manohar Jadhav
+    
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <groupId>com.cybage</groupId>
+    <artifactId>log4j-example</artifactId>
+    <version>1.1.0</version>
+    <packaging>jar</packaging>
+
+
+    <name>log4j-example</name>
+    <url>http://maven.apache.org</url>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+
+
+
+    </dependencies>
+</project>
+ 
+
+
+
+
+
+
+
+
